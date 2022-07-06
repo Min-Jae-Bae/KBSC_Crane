@@ -47,22 +47,41 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 
+/*typealias는 존재하는 타입의 이름을 별명으로 바꿔서 짧게 쓰는 것을 말한다.
+*OnExploreItemClicked 라는 이름이 (ExploreModel) -> Unit로 별명으로 지정하는 것이다. */
 typealias OnExploreItemClicked = (ExploreModel) -> Unit
 
+/*Enum에서는 특정 값을 single instance로서 하나의 객체만 제한적으로 사용하는 것
+* Fly, Sleep, Eat이라는 객체를 사용하는 것*/
 enum class CraneScreen {
     Fly, Sleep, Eat
 }
 
 @Composable
 fun CraneHome(
+    /*폭 사이즈: 윈도우 폭 사이즈 클래스
+    * 본 아이템 클릭시: (ExploreModel) -> Unit
+    * 날짜 선택 클릭시: 아무거나
+    * Modifier이란 Compose의 UI 구성요소들을 꾸미거나 행동을 추가하기 위한 요소들의 모음이다
+    * MainViewModel 파일 안에 있는 클래스 액세스*/
     widthSize: WindowWidthSizeClass,
     onExploreItemClicked: OnExploreItemClicked,
     onDateSelectionClicked: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: MainViewModel
 ) {
+    /*Scaffold를 사용하기 위해서는 ScaffoldState가 필요하므로
+    *rememberScaffoldState()를 이용해 scaffoldState를 만든다 */
     val scaffoldState = rememberScaffoldState()
+
+    //Scaffold는 기본 머티리얼 디자인 레이아웃 구조로 UI를 구현
     Scaffold(
+
+        /* scaffoldState를 넘긴다
+        * Modifier 구성요소중 하나인 상태 바를 추가하는 것을 받아들인다.
+        * 앱 서랍 내용을 놓고 그리는 작업
+        * contentPadding은 content의 padding을 결정하는 것
+        * */
         scaffoldState = scaffoldState,
         modifier = Modifier.statusBarsPadding(),
         drawerContent = {

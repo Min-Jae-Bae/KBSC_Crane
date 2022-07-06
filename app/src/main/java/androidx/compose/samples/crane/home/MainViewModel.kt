@@ -35,6 +35,7 @@ import kotlin.random.Random
 
 const val MAX_PEOPLE = 4
 
+/*MainViewModel 클래스 생성*/
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val destinationsRepository: DestinationsRepository,
