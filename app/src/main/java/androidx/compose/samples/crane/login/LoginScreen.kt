@@ -33,7 +33,10 @@ fun LoginScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        Text(text = "Hello")
+        Text(
+            text = "Hello"
+
+        )
     }
 
 
