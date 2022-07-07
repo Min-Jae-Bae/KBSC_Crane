@@ -10,6 +10,10 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.*
 import androidx.compose.samples.crane.R
 import androidx.compose.samples.crane.ui.CraneTheme
@@ -25,6 +29,8 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -113,7 +119,18 @@ fun LoginScreen() {
                     keyboardActions = KeyboardActions(
                         onNext = { focusManager.moveFocus(FocusDirection.Down) }
                     ),
-                    isError = isEmailValid
+                    isError = !isEmailValid,
+                    trailingIcon = {
+                        if (email.isNotBlank()) {
+                            IconButton(onClick = { email = ""}) {
+                                Icon(
+                                    imageVector = Icons.Filled.Clear,
+                                    contentDescription = "이메일 지우기")
+
+
+                            }
+                        }
+                    }
                 )
 
 
@@ -130,7 +147,17 @@ fun LoginScreen() {
                     keyboardActions = KeyboardActions(
                         onNext = { focusManager.moveFocus(FocusDirection.Down) }
                     ),
-                    isError = isPasswordValid
+                    isError = !isPasswordValid,
+                    trailingIcon = {
+                        IconButton(
+                            onClick = { isPasswordVisible = !isPasswordVisible }
+                        ) {
+                            Icon(
+                                imageVector = if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                                contentDescription = "비밀번호 보이게 전환")
+                        }
+                    },
+                    visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation()
                 )
 
                 Button(
@@ -151,8 +178,7 @@ fun LoginScreen() {
         Row(
             horizontalArrangement = Arrangement.End,
             modifier = Modifier.fillMaxWidth()
-        ) {
-            TextButton(
+        ) { TextButton(
                 onClick = { /*TODO*/ }
             ) {
                 Text(
