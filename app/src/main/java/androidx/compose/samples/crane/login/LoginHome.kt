@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.*
 import androidx.compose.samples.crane.R
+import androidx.compose.samples.crane.home.LoginScreen
 import androidx.compose.samples.crane.ui.CraneTheme
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,7 +39,7 @@ import org.w3c.dom.Text
 
 
 @Composable
-fun LoginScreen() {
+fun LoginHome() {
 
 
     val focusManager = LocalFocusManager.current
@@ -211,6 +212,6 @@ fun LoginScreen() {
 @Composable
 fun LoginScreenPreview() {
     CraneTheme {
-        LoginScreen()
+        LoginHome()
     }
 }
