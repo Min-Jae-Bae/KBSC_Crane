@@ -58,13 +58,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-@AndroidEntryPoint
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class) // 어노테이션이 연결된 파일, 선언, 식에서 opt-in API를 사용할 수 있습니다.
+@AndroidEntryPoint // 프로젝트의 각 Android 클래스에 관한 개별 Hilt 구성요소를 생성
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // false하면 프레임워크가 콘텐츠 보기를 삽입에 맞추지 않고 콘텐츠 보기를 통해 전달
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
