@@ -47,6 +47,7 @@ import androidx.compose.runtime.*
 import androidx.compose.samples.crane.R
 import androidx.compose.samples.crane.calendar.CalendarScreen
 import androidx.compose.samples.crane.details.launchDetailsActivity
+import androidx.compose.samples.crane.login.LoginHome
 import androidx.compose.samples.crane.login.LoginViewModel
 import androidx.compose.samples.crane.ui.CraneTheme
 import androidx.compose.ui.Alignment
@@ -63,13 +64,16 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -91,12 +95,12 @@ class MainActivity : ComponentActivity() {
 
                 // 앱의 화면과 각 화면 상태를 구성하는 컴포저블의 백 스택을 추적
                 val navController = rememberNavController()
-                //  NavHost는 구성 가능한 대상을 지정하는 탐색 그래프
-                NavHost(navController = navController, startDestination = Routes.Home.route) {
+                //  NavHost는 구성 가능한 대상을 지정하는 탐색 그래프, 로그인 부터 시작
+                NavHost(navController = navController, startDestination = Routes.Login.route) {
 
                     composable(Routes.Login.route) {
                         val loginViewModel = hiltViewModel<LoginViewModel>()
-                            LoginScreen()
+                        LoginScreen()
                     }
 
 
@@ -131,6 +135,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// 동일 파일에 정의된 하위 클래스 외에 다른 하위 클래스는 존재하지 않는다는 것을 컴파일러에게 알려주는 것
 sealed class Routes(val route: String) {
     object Home : Routes("home")
     object Calendar : Routes("calendar")
@@ -261,7 +266,8 @@ fun LoginScreen() {
                 )
 
                 Button(
-                    onClick = { /*TODO*/ },
+                    // 클릭시 홈 화면으로 이동
+                    onClick = { navController.navigate(Routes.Home.route) },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red),
                     enabled = isEmailValid && isPasswordValid
@@ -388,3 +394,12 @@ private fun MainContent(
 }
 
 enum class SplashState { Shown, Completed }
+
+
+@Preview
+@Composable
+fun LoginScreenPreview() {
+    CraneTheme {
+
+    }
+}
