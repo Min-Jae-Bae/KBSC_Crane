@@ -106,19 +106,26 @@ class MainActivity : ComponentActivity() {
 
                     // composable() 메서드를 사용하여 탐색 구조에 추가, 경로뿐만 아니라 대상에 연결해야 할 컴포저블도 제공
                     composable(Routes.Home.route) {
+                        // hilt 모델 가져오기 MainViewModel
                         val mainViewModel = hiltViewModel<MainViewModel>()
+
+                        // MainScreen 불러오기
                         MainScreen(
                             widthSize = widthSizeClass,
                             onExploreItemClicked = {
                                 launchDetailsActivity(context = this@MainActivity, item = it)
                             },
                             onDateSelectionClicked = {
+                                // 이동
                                 navController.navigate(Routes.Calendar.route)
                             },
+                            //  ViewModel 객체는 구성이 변경되는 동안 자동으로 보관,객체가 보유한 데이터는 다음 활동
+                            //  또는 프래그먼트 인스턴스에서 즉시 사용할 수 있다
                             mainViewModel = mainViewModel
                         )
                     }
                     composable(Routes.Calendar.route) {
+                        // 이전에 돌아가는 것 인데 그것을 기억
                         val parentEntry = remember {
                             navController.getBackStackEntry(Routes.Home.route)
                         }
@@ -126,6 +133,7 @@ class MainActivity : ComponentActivity() {
                             parentEntry
                         )
                         CalendarScreen(onBackPressed = {
+                            //  종료 조건과 관련된 함수
                             navController.popBackStack()
                         }, mainViewModel = parentViewModel)
                     }
@@ -267,7 +275,7 @@ fun LoginScreen() {
 
                 Button(
                     // 클릭시 홈 화면으로 이동
-                    onClick = { navController.navigate(Routes.Home.route) },
+                    onClick = {  /*TODO*/},
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red),
                     enabled = isEmailValid && isPasswordValid
@@ -321,39 +329,55 @@ fun LoginScreen() {
 @VisibleForTesting
 @Composable
 fun MainScreen(
+    // 여러가지 설정
     widthSize: WindowWidthSizeClass,
     onExploreItemClicked: OnExploreItemClicked,
     onDateSelectionClicked: () -> Unit,
     mainViewModel: MainViewModel
 ) {
+    // 색상 지정 (표면)
     Surface(
+        // insets내용이 공백에 들어가지 않도록 패딩을 추가
         modifier = Modifier.windowInsetsPadding(
             WindowInsets.navigationBars.only(WindowInsetsSides.Start + WindowInsetsSides.End)
         ),
+        // 색상 지정
         color = MaterialTheme.colors.primary
     ) {
+        //  메모리에 객체를 저장 (remember),  전환 애니메이션의 과정을 변경하도록 변경할 수 있다 (MutableTransitionState)
         val transitionState = remember { MutableTransitionState(mainViewModel.shownSplash.value) }
+        // 상태 업데이트 -> splash 전환
         val transition = updateTransition(transitionState, label = "splashTransition")
+        // splashAlpha라는 자식 에니메이션으로 전환
         val splashAlpha by transition.animateFloat(
+            // 에니메이션 지속 시간 설정
             transitionSpec = { tween(durationMillis = 100) }, label = "splashAlpha"
         ) {
+            // 처음 상태 else 나중 상태
             if (it == SplashState.Shown) 1f else 0f
         }
         val contentAlpha by transition.animateFloat(
+            // 애니메이션 지속 시간 설정
             transitionSpec = { tween(durationMillis = 300) }, label = "contentAlpha"
         ) {
+            // 처음 상태 else 나중 상태
             if (it == SplashState.Shown) 0f else 1f
         }
+        // 에니메이션 전환을 DP로 관리
         val contentTopPadding by transition.animateDp(
+            // 모든 저강성 사용을 정의 -> 대상에 반올림할 수 있을 정도로 시각적으로 가깝게 임계값 정의
             transitionSpec = { spring(stiffness = StiffnessLow) }, label = "contentTopPadding"
         ) {
+            // 처음 상태 else 나중 상태
             if (it == SplashState.Shown) 100.dp else 0.dp
         }
 
         Box {
             LandingScreen(
+                // 1보다 더 적은 알파 수정 내용을 그린다.
                 modifier = Modifier.alpha(splashAlpha),
                 onTimeout = {
+                    // 가려는 상태와 메인 뷰 모델 값
                     transitionState.targetState = SplashState.Completed
                     mainViewModel.shownSplash.value = SplashState.Completed
                 }
@@ -382,6 +406,7 @@ private fun MainContent(
 ) {
 
     Column(modifier = modifier) {
+        // 빈 레이아웃 공간보여주는 컴포넌트
         Spacer(Modifier.padding(top = topPadding))
         CraneHome(
             widthSize = widthSize,
@@ -396,10 +421,3 @@ private fun MainContent(
 enum class SplashState { Shown, Completed }
 
 
-@Preview
-@Composable
-fun LoginScreenPreview() {
-    CraneTheme {
-
-    }
-}
