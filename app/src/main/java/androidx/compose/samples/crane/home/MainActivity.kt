@@ -337,7 +337,7 @@ fun MainScreen(
 ) {
     // 색상 지정 (표면)
     Surface(
-        // insets내용이 공백에 들어가지 않도록 패딩을 추가
+        // insets내용이 공백에 들어가지 않도록 패딩을 추가함
         modifier = Modifier.windowInsetsPadding(
             WindowInsets.navigationBars.only(WindowInsetsSides.Start + WindowInsetsSides.End)
         ),
