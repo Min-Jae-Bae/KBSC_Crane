@@ -22,11 +22,14 @@ import javax.inject.Singleton
 private const val DEFAULT_IMAGE_WIDTH = "250"
 
 /**
- * Annotated with Singleton as the class created a lot of objects.
+ * 싱글톤을 선언해서 많은 객체를 넣을 수 있게 함 - 객체 주입
+ *
+ * Cities 파일에 있는 도시와 관련한 데이터 접근하고 주입
  */
 @Singleton
 class DestinationsLocalDataSource @Inject constructor() {
 
+    // 식당에 관한 목록을 ExploreModel의 데이터 클래스에 접근 목록 주입 ( ExploreModel 파일에 접근 )
     val craneRestaurants = listOf(
         ExploreModel(
             city = NAPLES,
@@ -64,6 +67,8 @@ class DestinationsLocalDataSource @Inject constructor() {
             imageUrl = "https://images.unsplash.com/photo-1567337710282-00832b415979?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=$DEFAULT_IMAGE_WIDTH"
         )
     )
+
+    // 호텔에 관한 목록을 ExploreModel의 데이터 클래스에 접근 목록 주입 ( ExploreModel 파일에 접근 )
 
     val craneHotels = listOf(
         ExploreModel(
@@ -103,6 +108,7 @@ class DestinationsLocalDataSource @Inject constructor() {
         )
     )
 
+    // 목적지에 관한 목록을 ExploreModel의 데이터 클래스에 접근 목록 주입 ( ExploreModel 파일에 접근 )
     val craneDestinations = listOf(
         ExploreModel(
             city = KHUMBUVALLEY,

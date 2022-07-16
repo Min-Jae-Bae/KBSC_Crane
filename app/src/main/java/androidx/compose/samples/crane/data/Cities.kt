@@ -16,6 +16,8 @@
 
 package androidx.compose.samples.crane.data
 
+// 도시에 관련한 데이터를 생성함
+
 val MADRID = City(
     name = "Madrid",
     country = "Spain",

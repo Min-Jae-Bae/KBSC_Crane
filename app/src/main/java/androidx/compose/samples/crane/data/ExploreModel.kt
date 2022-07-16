@@ -18,6 +18,7 @@ package androidx.compose.samples.crane.data
 
 import androidx.compose.runtime.Immutable
 
+// 쉽게 변한는 인스턴스를 사용하는 클래스 라는 것을 표시함
 @Immutable
 data class City(
     val name: String,
@@ -28,6 +29,7 @@ data class City(
     val nameToDisplay = "$name, $country"
 }
 
+// 탐구 모델이라는 데이터 클래스를 생성
 @Immutable
 data class ExploreModel(
     val city: City,

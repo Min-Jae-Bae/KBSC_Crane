@@ -98,10 +98,11 @@ class MainActivity : ComponentActivity() {
                 //  NavHost는 구성 가능한 대상을 지정하는 탐색 그래프, 로그인 부터 시작
                 NavHost(navController = navController, startDestination = Routes.Login.route) {
 
-                    composable(Routes.Login.route) {
+                /*  로그인 컴포저블
+               composable(Routes.Login.route) {
                         val loginViewModel = hiltViewModel<LoginViewModel>()
                         LoginScreen()
-                    }
+                    }*/
 
 
                     // composable() 메서드를 사용하여 탐색 구조에 추가, 경로뿐만 아니라 대상에 연결해야 할 컴포저블도 제공
@@ -150,6 +151,7 @@ sealed class Routes(val route: String) {
     object Login : Routes("login")
 }
 
+/* 로그인 기능 제작
 @Composable
 fun LoginScreen() {
 
@@ -165,7 +167,9 @@ fun LoginScreen() {
         mutableStateOf("")
     }
 
-    /*유효한지 확인*/
+    */
+/*유효한지 확인*//*
+
     val isEmailValid by derivedStateOf {
         Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
@@ -275,7 +279,9 @@ fun LoginScreen() {
 
                 Button(
                     // 클릭시 홈 화면으로 이동
-                    onClick = {  /*TODO*/},
+                    onClick = {  */
+/*TODO*//*
+},
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red),
                     enabled = isEmailValid && isPasswordValid
@@ -293,7 +299,9 @@ fun LoginScreen() {
             horizontalArrangement = Arrangement.End,
             modifier = Modifier.fillMaxWidth()
         ) { TextButton(
-            onClick = { /*TODO*/ }
+            onClick = { */
+/*TODO*//*
+ }
         ) {
             Text(
                 color = Color.Black,
@@ -304,7 +312,9 @@ fun LoginScreen() {
         }
         }
         Button(
-            onClick = { /*TODO*/ },
+            onClick = { */
+/*TODO*//*
+ },
             enabled = true,
             modifier = Modifier
                 .fillMaxWidth()
@@ -320,6 +330,7 @@ fun LoginScreen() {
         }
     }
 }
+*/
 
 
 
